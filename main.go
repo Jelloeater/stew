@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"os"
-
 	"github.com/marwanhawari/stew/cmd"
 	"github.com/urfave/cli"
 )
@@ -101,6 +100,18 @@ func main() {
 				Action: func(c *cli.Context) error {
 					cmd.Config()
 					return nil
+				},
+			},
+			{
+				Name:  "completion",
+				Usage: "Configure stew using an interactive UI. [Ex: stew config]",
+				Action: func(c *cli.Context) error {
+			    shell := "zsh"
+				    if len(os.Args) > 2 {
+				        shell = os.Args[2]
+				    }
+				    cmd.RunCompletion(shell)
+				    return nil
 				},
 			},
 		},
