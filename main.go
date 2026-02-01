@@ -12,7 +12,7 @@ func main() {
 
 	app := &cli.App{
 		Name:    "stew",
-		Version: "v0.4.0",
+		Version: "v0.6.0",
 		Commands: []cli.Command{
 			{
 				Name:    "install",
@@ -28,7 +28,7 @@ func main() {
 				Usage:   "Search for a GitHub repo then browse the selected repo's releases and assets. [Ex: stew search ripgrep]",
 				Aliases: []string{"s"},
 				Action: func(c *cli.Context) error {
-					cmd.Search(c.Args().First())
+					cmd.Search(c.Args())
 					return nil
 				},
 			},
@@ -97,7 +97,7 @@ func main() {
 			},
 			{
 				Name:  "config",
-				Usage: "Configure the stew file paths using an interactive UI. [Ex: stew config]",
+				Usage: "Configure stew using an interactive UI. [Ex: stew config]",
 				Action: func(c *cli.Context) error {
 					cmd.Config()
 					return nil

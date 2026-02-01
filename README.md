@@ -36,11 +36,11 @@
 * Easily distribute binaries across teams and private repositories.
 * Get the latest releases ahead of other package managers.
 * Rapidly browse, install, and experiment with different projects.
-* [Configure](https://github.com/marwanhawari/stew/blob/main/config.md) where to install binaries.
+* [Configure](https://github.com/marwanhawari/stew?tab=readme-ov-file#configuration) where to install binaries.
 * No need for `sudo`.
 * Just a single binary with 0 dependencies.
 * Portable [`Stewfile`](https://github.com/marwanhawari/stew/blob/main/examples/Stewfile) with optional pinned versioning.
-* Headless batch installs from a `Stewfile.lock.json` file.
+* Headless batch installs from a [`Stewfile.lock.json`](https://github.com/marwanhawari/stew/blob/main/examples/Stewfile.lock.json) file.
 
 ![demo](https://github.com/marwanhawari/stew/raw/main/assets/demo.gif)
 
@@ -112,12 +112,17 @@ stew install Stewfile
 
 # Install headlessly from a Stewfile.lock.json
 stew install Stewfile.lock.json
+
+# Install multiple binaries per repo/asset
+stew install astral-sh/uv     # Install uv the first time
+stew install astral-sh/uv     # Install uvx the second time
 ```
 
 ### Search
 ```sh
 # Search for a GitHub repo and browse its contents with a terminal UI
 stew search ripgrep
+stew search fzf user:junegunn language:go    # Use GitHub search syntax
 ```
 
 ### Browse
@@ -160,6 +165,30 @@ stew list --tags > Stewfile            # Pin tags
 stew config           # Automatically updates the stew.config.json
 ```
 
+# Configuration
+`stew` can be configured with a `stew.config.json` file. The location of this file will also depend on your OS:
+|Linux/macOS | Windows |
+| ------------ | ---------- |
+| `$XDG_CONFIG_HOME/stew` or `~/.config/stew` | `~/AppData/Local/stew/Config` |
+
+You can configure 2 aspects of `stew`:
+1. The `stewPath`: this is where `stew` data is stored.
+2. The `stewBinPath`: this is where `stew` installs binaries
+3. `excludeFromUpgradeAll`: this is the list of binaries that you don't want to be upgraded during `stew upgrade --all`, perhaps because they have their own built in upgrade feature or because you want to pin a specific version.
+
+The default locations for the `stewPath` and `stewBinPath` are:
+|                    | Linux/macOS | Windows |
+| ------------ | ------------ | ---------- |
+| `stewPath` | `$XDG_DATA_HOME/stew` or `~/.local/share/stew` | `~/AppData/Local/stew` |
+| `stewBinPath` | `~/.local/bin` | `~/AppData/Local/stew/bin` |
+
+There are multiple ways to configure these:
+* When you first run `stew`, it will look for a `stew.config.json` file. If it cannot find one, then you will be prompted to set the configuration values.
+* After `stew` is installed, you can use the `stew config` command to set the configuration values.
+* At any time, you can manually create or edit the `stew.config.json` file. It should have values for `stewPath`, `stewBinPath`, and `excludeFromUpgradeAll`. 
+
+Make sure that the installation path is in your `PATH` environment variable. Otherwise, you won't be able to use any of the binaries installed by `stew`.
+
 # FAQ
 ### Why couldn't `stew` automatically find any binaries for X repo?
 The repo probably uses an unconventional naming scheme for their binaries. You can always manually select the release asset.
@@ -167,12 +196,5 @@ The repo probably uses an unconventional naming scheme for their binaries. You c
 ### Will `stew` work with private GitHub repositories?
 Yes, `stew` will automatically detect if you have a `GITHUB_TOKEN` environment variable and allow you to access binaries from your private repositories.
 
-### Where does `stew` install binaries?
-The default installation path will depend on your OS:
-| Linux/macOS | Windows |
-| ------------ | ---------- |
-| `~/.local/bin` | `~/AppData/Local/stew/bin` |
-
-However, this location can be [configured](https://github.com/marwanhawari/stew/blob/main/config.md).
-
-Make sure that the installation path is in your `PATH` environment variable. Otherwise, you won't be able to use any of the binaries installed by `stew`.
+### I'm hitting the GitHub API rate limit when installing from a large `Stewfile.lock.json`. How can I avoid this?
+Unauthenticated GitHub API requests are limited to 60 requests per hour. However, authenticated requests can make up to 5,000 requests per hour. To avoid hitting the limit, set a `GITHUB_TOKEN` environment variable. `Stew` will automatically detect it and use it for authenticated GitHub API requests.
