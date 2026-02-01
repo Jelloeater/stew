@@ -53,7 +53,7 @@ _stew() {
             ;;
     esac
 }
-_stew "$@"`
+#_stew "$@"`
 }
 
 // RunCompletion prints the completion script to stdout

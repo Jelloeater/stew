@@ -104,7 +104,7 @@ func main() {
 			},
 			{
 				Name:  "completion",
-				Usage: "Configure stew using an interactive UI. [Ex: stew config]",
+				Usage: "Generate completion script for a specified shell. [Ex: stew completion zsh]",
 				Action: func(c *cli.Context) error {
 			    shell := "zsh"
 				    if len(os.Args) > 2 {
