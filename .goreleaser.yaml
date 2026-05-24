@@ -32,14 +32,14 @@ nfpms:
       - deb
       - rpm
     bindir: /usr/bin
-brews:
-  - repository:
-      owner: Jelloeater
-      name: homebrew-tap
-    directory: Formula
-    commit_author:
-      name: Jelloeater
-      email: marwan.hawari@gmail.com
-    license: "MIT"
-    homepage: "https://github.com/Jelloeater/stew"
-    description: "An independent package manager for compiled binaries"
+# brews:
+#   - repository:
+#       owner: Jelloeater
+#       name: homebrew-tap
+#     directory: Formula
+#     commit_author:
+#       name: Jelloeater
+#       email: marwan.hawari@gmail.com
+#     license: "MIT"
+#     homepage: "https://github.com/Jelloeater/stew"
+#     description: "An independent package manager for compiled binaries"
