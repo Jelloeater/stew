@@ -10,7 +10,7 @@ func GetZshCompletion() string {
 	return `#compdef stew
 _stew_installed_binaries() {
     local -a binaries
-    binaries=($(stew list 2>/dev/null | tail -n +2 | awk '{print $1}'))
+    binaries=($(stew list 2>/dev/null | awk -F: 'NF {print $1}'))
     _describe 'installed binaries' binaries
 }
 
