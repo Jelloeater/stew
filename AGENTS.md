@@ -7,6 +7,7 @@
 - **Run**: `./stew [command]`
 - **Lint**: No dedicated linter configured in the project, but `go vet ./...` is recommended.
 - **Coverage**: `go test -v ./... --coverprofile coverage.out && go tool cover --func coverage.out`
+- **Completion**: `stew completion zsh` - Generates Zsh shell completion script.
 
 ## Code Organization
 
@@ -51,4 +52,4 @@
 - **Binary Detection**: Stew relies on finding exactly one executable file in the downloaded asset. If it finds multiple or none, it prompts the user.
 - **OS/Arch Matching**: Done via regex. See `constants/constants.go` for the exact patterns used to match asset names.
 - **Lockfile**: The `Stewfile.lock.json` is critical for `upgrade` and `uninstall` commands. If it gets out of sync with the actual `bin` directory, these commands might fail or behave unexpectedly.
-- **Zsh Completions**: The `completion` command generates a Zsh script. It relies on `stew list` output to populate installed binaries for arguments.
+- **Zsh Completions**: The `completion` command generates a Zsh script. It currently only supports Zsh. It relies on `stew list` output to populate installed binaries for command arguments (like `upgrade` or `uninstall`).
