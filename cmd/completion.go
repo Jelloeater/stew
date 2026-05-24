@@ -39,6 +39,7 @@ _stew() {
                 'list:List installed binaries'
                 'ls:List installed binaries'
                 'config:Configure stew'
+                'completion:Generate shell completion scripts'
                 'help:Show help'
                 'h:Show help'
             )
@@ -53,10 +54,10 @@ _stew() {
             ;;
     esac
 }
-#_stew "$@"`
+compdef _stew stew`
 }
 
-// RunCompletion prints the completion script to stdout
+// RunCompletion prints the completion script to stdout for supported shells.
 func RunCompletion(shell string) error {
 	switch shell {
 	case "zsh":

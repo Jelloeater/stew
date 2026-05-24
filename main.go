@@ -105,14 +105,13 @@ func main() {
 			},
 			{
 				Name:  "completion",
-				Usage: "Generate completion script for a specified shell. [Ex: stew completion zsh]",
+				Usage: "Generate completion script for a specified shell (currently: zsh). [Ex: stew completion zsh]",
 				Action: func(c *cli.Context) error {
-			    shell := "zsh"
-				    if len(os.Args) > 2 {
-				        shell = os.Args[2]
-				    }
-				    cmd.RunCompletion(shell)
-				    return nil
+					shell := c.Args().First()
+					if shell == "" {
+						shell = "zsh"
+					}
+					return cmd.RunCompletion(shell)
 				},
 			},
 		},
